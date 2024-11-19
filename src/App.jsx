@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
 
@@ -8,9 +8,27 @@ function App() {
   
 
   function hendelAddTodo() {
-    console.log(allTodos);
-    setAllTodos(prevValue => [...prevValue,singleTodo])
+    setAllTodos(prevValue => [...prevValue,singleTodo]);
+    toLocalStorage([...allTodos,singleTodo] );
+   
   }
+
+  function todoDeleat(i){
+    allTodos.splice(i,1);
+    setAllTodos(allTodos);
+    }
+
+  function toLocalStorage(todo){
+    localStorage.setItem('todos',JSON.stringify(todo));
+  }
+
+  function fromLocalStorage(){
+    data=JSON.parse(localStorage.getItem("todos"))
+  }
+
+  useEffect(()=>{
+    
+  },[])
   return (
     <>
     <div>
@@ -29,10 +47,11 @@ function App() {
         <p>{i+1}</p>
         <h1>{data.title}</h1>
         <p>{data.disc}</p>
+        <button onClick={(i)=>{todoDeleat(i)}}>delete</button>
       </div>)
       }
     </div>
-
+  
     </>
   )
 }
