@@ -16,6 +16,8 @@ function App() {
   function todoDeleat(i){
     allTodos.splice(i,1);
     setAllTodos(allTodos);
+    toLocalStorage(allTodos);
+    fromLocalStorage();
     }
 
   function toLocalStorage(todo){
@@ -23,11 +25,12 @@ function App() {
   }
 
   function fromLocalStorage(){
-    data=JSON.parse(localStorage.getItem("todos"))
+    let data=JSON.parse(localStorage.getItem("todos")) || [] ;
+    setAllTodos(data)
   }
 
   useEffect(()=>{
-    
+    fromLocalStorage()
   },[])
   return (
     <>
@@ -47,7 +50,7 @@ function App() {
         <p>{i+1}</p>
         <h1>{data.title}</h1>
         <p>{data.disc}</p>
-        <button onClick={(i)=>{todoDeleat(i)}}>delete</button>
+        <button onClick={()=>todoDeleat(i)}>delete</button>
       </div>)
       }
     </div>
